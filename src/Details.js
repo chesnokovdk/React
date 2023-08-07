@@ -3,13 +3,14 @@ import pet from '@frontendmasters/pet';
 
 
 class Details extends React.Component {
-    constructor(props) {
-        super(props);
+    state = { loading:true };
+    // constructor(props) {
+    //     super(props);
 
-        this.state= {
-            loading: true
-        }
-    }
+    //     this.state= {
+    //         loading: true
+    //     }
+    // }
     componentDidMount () {
         pet.animal(this.props.id).then(({animal}) => {
                 this.setState({
@@ -29,6 +30,7 @@ class Details extends React.Component {
         }
         
         const { animal, breed, location, description, name} = this.state;
+
 
         // let hero = 'https://placecorgi.com/300/300';
 

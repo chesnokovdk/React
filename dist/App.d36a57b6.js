@@ -33182,13 +33182,23 @@ exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 var _pet = _interopRequireDefault(require("@frontendmasters/pet"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 class Details extends _react.default.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+  constructor(...args) {
+    super(...args);
+    _defineProperty(this, "state", {
       loading: true
-    };
+    });
   }
+  // constructor(props) {
+  //     super(props);
+
+  //     this.state= {
+  //         loading: true
+  //     }
+  // }
   componentDidMount() {
     _pet.default.animal(this.props.id).then(({
       animal
@@ -33297,7 +33307,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50469" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51500" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

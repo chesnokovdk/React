@@ -11,9 +11,12 @@ const App = () => {
     <React.StrictMode>
 
     <div>
+
       <header>
-        <Link to="/">Adopt Me!</Link>
+      <Link to="/">Adopt Me!</Link>
+      
       </header>
+      
       {/* <h3>FUch how does it work?!_1</h3> */}
       {/* <h3>FUch how does it work?!_2</h3> */}
       <Router>
