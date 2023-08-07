@@ -22,3 +22,7 @@ class ErrorBoundary extends Component {
     return this.props.children;
   }
 }
+
+// thsdf
+
+export default ErrorBoundary;
