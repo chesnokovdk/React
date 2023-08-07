@@ -33172,7 +33172,73 @@ const SearchParams = () => {
 };
 var _default = SearchParams;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./useDropdown":"useDropdown.js","./Results":"Results.js"}],"Details.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./useDropdown":"useDropdown.js","./Results":"Results.js"}],"Carousel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _react = _interopRequireDefault(require("react"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+class Carousel extends _react.default.Component {
+  constructor(props) {
+    super(props);
+    _defineProperty(this, "state", {
+      photos: [],
+      active: 0
+    });
+    _defineProperty(this, "handleIndexClick", event => {
+      this.setState({
+        active: +event.target.dataset.index
+      });
+    });
+    this.handleIndexClick = this.handleIndexClick.bind(this);
+  }
+  static getDerivedStateFromProps({
+    media
+  }) {
+    let photos = ["http://placecorgi.com/600/600"];
+    if (media.length) {
+      photos = media.map(({
+        large
+      }) => large);
+    }
+    return {
+      photos
+    };
+  }
+  render() {
+    const {
+      photos,
+      active
+    } = this.state;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "carousel"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: photos[active],
+      alt: "animal"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "carousel-smaller"
+    }, photos.map((photo, index) =>
+    /*#__PURE__*/
+    //eslint-disable-next-line
+    _react.default.createElement("img", {
+      key: photo,
+      onclick: this.handleIndexCLick,
+      "data-index": index,
+      src: photo.large,
+      className: index === active ? "active" : "",
+      alt: "animal thumbnail"
+    }))));
+  }
+}
+var _default = Carousel;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"Details.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33181,6 +33247,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 var _react = _interopRequireDefault(require("react"));
 var _pet = _interopRequireDefault(require("@frontendmasters/pet"));
+var _Carousel = _interopRequireDefault(require("./Carousel"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -33192,13 +33259,13 @@ class Details extends _react.default.Component {
       loading: true
     });
   }
-  // constructor(props) {
+  //   constructor(props) {
   //     super(props);
 
-  //     this.state= {
-  //         loading: true
-  //     }
-  // }
+  //     this.state = {
+  //       loading: true,
+  //     };
+  //   }
   componentDidMount() {
     _pet.default.animal(this.props.id).then(({
       animal
@@ -33223,14 +33290,14 @@ class Details extends _react.default.Component {
       breed,
       location,
       description,
-      name
+      name,
+      media
     } = this.state;
-
-    // let hero = 'https://placecorgi.com/300/300';
-
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "details"
-    }, /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("h2", null, `${animal} - ${breed} - ${location}`), /*#__PURE__*/_react.default.createElement("button", null, " Adopt ", name), /*#__PURE__*/_react.default.createElement("p", null, " ", description)));
+    }, /*#__PURE__*/_react.default.createElement(_Carousel.default, {
+      media: media
+    }), /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("h1", null, name), /*#__PURE__*/_react.default.createElement("h2", null, `${animal} - ${breed} - ${location}`), /*#__PURE__*/_react.default.createElement("button", null, " Adopt ", name), /*#__PURE__*/_react.default.createElement("p", null, " ", description)));
   }
 }
 
@@ -33244,7 +33311,7 @@ class Details extends _react.default.Component {
 // };
 var _default = Details;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js"}],"App.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Carousel":"Carousel.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -33307,7 +33374,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51500" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51763" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
