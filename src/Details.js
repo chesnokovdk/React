@@ -2,19 +2,20 @@ import React from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemeContext from "./ThemeContext";
 
 class Details extends React.Component {
-  state = { loading:true };
-//   constructor(props) {
-//     super(props);
+  state = { loading: true };
+  //   constructor(props) {
+  //     super(props);
 
-//     this.state = {
-//       loading: true,
-//     };
-//   }
+  //     this.state = {
+  //       loading: true,
+  //     };
+  //   }
   componentDidMount() {
     // here we generate Error to check our work
-    throw new Error("lol");
+    // throw new Error("lol");
     pet.animal(this.props.id).then(({ animal }) => {
       this.setState({
         name: animal.name,
@@ -36,12 +37,18 @@ class Details extends React.Component {
 
     return (
       <div className="details">
-        <Carousel media={media}/>
+        <Carousel media={media} />
         <div>
           {/* <img  alt={name}/> */}
           <h1>{name}</h1>
           <h2>{`${animal} - ${breed} - ${location}`}</h2>
-          <button> Adopt {name}</button>
+          <ThemeContext.Consumer>
+            {([theme]) => (
+              <button style={{ backgroundColor: theme }}>
+                Adopt {name}
+              </button>
+            )}
+          </ThemeContext.Consumer>
           <p> {description}</p>
         </div>
       </div>
@@ -60,7 +67,7 @@ class Details extends React.Component {
 //   );
 // };
 
-export default function DetailsWithErrorBoundary(props){
+export default function DetailsWithErrorBoundary(props) {
   return (
     <ErrorBoundary>
       <Details {...props} />

@@ -1,49 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import pet, { ANIMALS } from "@frontendmasters/pet";
-import useDropdown from './useDropdown';
-import Results from './Results';
+import useDropdown from "./useDropdown";
+import Results from "./Results";
+import ThemeContext from "./ThemeContext";
 
 const SearchParams = () => {
   //   const location = "Seattle, WA_location!";
 
-  const [my_locationok1, myNameLocation] = useState("Seattle, WA_location!_123");
+  const [my_locationok1, myNameLocation] = useState(
+    "Seattle, WA_location!_123",
+  );
   // const [animal, setAnimal] = useState("dog!");
   const [breeds, setBreeds] = useState([]);
   const [animal, AnimalDropdown] = useDropdown("Animal", "dog", ANIMALS);
   // const [breed, setBreed] = useState("");
   const [breed, BreedDropdown, setBreed] = useDropdown("Breed", "", breeds);
   const [pets, setPets] = useState([]);
+  const [theme, setTheme] = useContext(ThemeContext);
 
   async function requestPets() {
-    const {animals} = await pet.animals({
+    const { animals } = await pet.animals({
       location,
       breed,
-      type:animal
-    })
+      type: animal,
+    });
 
     setPets(animals || []);
   }
-  
-useEffect(() => {
-  // pet.breeds("dog").then(console.log, console.error);
-  setBreeds([]);
-  setBreed("");
 
-  pet.breeds(animal).then(({ breeds: anotherBreeds }) => {
-    const breedStrings = anotherBreeds.map(({name }) => name);
-    setBreeds(breedStrings);
-  }, console.error);
-}, [animal, setBreed, setBreeds]);
+  useEffect(() => {
+    // pet.breeds("dog").then(console.log, console.error);
+    setBreeds([]);
+    setBreed("");
+
+    pet.breeds(animal).then(({ breeds: anotherBreeds }) => {
+      const breedStrings = anotherBreeds.map(({ name }) => name);
+      setBreeds(breedStrings);
+    }, console.error);
+  }, [animal, setBreed, setBreeds]);
 
   // console.log('state of location', location);
 
   return (
     <div className="search-params">
       <h1>{my_locationok1}</h1>
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        requestPets();
-      }}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          requestPets();
+        }}
+      >
         <label htmlFor="location">
           Location_label
           <input
@@ -53,7 +59,6 @@ useEffect(() => {
             onChange={(event) => myNameLocation(event.target.value)}
           />
         </label>
-
 
         {/* <label htmlFor="animal">
           Animal
@@ -92,17 +97,28 @@ useEffect(() => {
           </select>
         </label> */}
 
-        <AnimalDropdown/>
-        <BreedDropdown/>
-
+        <AnimalDropdown />
+        <BreedDropdown />
+        <label htmlFor="theme">
+          Theme
+          <select
+            value={theme}
+            onChange={(e) => setTheme(e.target.value)}
+            onBlur={(e) => setTheme(e.target.value)}
+          >
+            <option value={"peru"}> Peru</option>
+            <option value={"darkBlue"}> darkBlue</option>
+            <option value={"mediumorchid"}> mediumorchid</option>
+            <option value={"chartreuse"}> chartreuse</option>
+          </select>
+        </label>
         {/* <h3 style={{border: "1px solid black", borderColor: "green", color: "red"}}>Line in form</h3> */}
 
-        
-        <button>Submit_button</button>
+        <button style={{ backgroundColor: theme }}>Submit_button</button>
       </form>
       <h2>KVA-KVA-KVA</h2>
-      <Results pets={pets}/>
-      
+      <Results pets={pets} />
+
       {/* <h2>FUch how does it work?!_4</h2> */}
     </div>
   );
