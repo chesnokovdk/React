@@ -33197,10 +33197,10 @@ class Carousel extends _react.default.Component {
       });
     });
   }
-  //   constructor(props) {
-  //     super(props);
-  //     this.handleIndexClick = this.handleIndexClick.bind(this);
-  //   }
+  // //   constructor(props) {
+  // //     super(props);
+  // //     this.handleIndexClick = this.handleIndexClick.bind(this);
+  // //   }
   static getDerivedStateFromProps({
     media
   }) {
@@ -33231,7 +33231,7 @@ class Carousel extends _react.default.Component {
     //eslint-disable-next-line
     _react.default.createElement("img", {
       key: photo,
-      onclick: this.handleIndexCLick,
+      onClick: this.handleIndexClick,
       "data-index": index,
       src: photo,
       className: index === active ? "active" : "",
@@ -33241,16 +33241,69 @@ class Carousel extends _react.default.Component {
 }
 var _default = Carousel;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"Details.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"ErrorBoundary.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+var _react = _interopRequireWildcard(require("react"));
+var _router = require("@reach/router");
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
+function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
+class ErrorBoundary extends _react.Component {
+  constructor(...args) {
+    super(...args);
+    _defineProperty(this, "state", {
+      hasError: false,
+      redirect: false
+    });
+  }
+  static getDerivedStateFromError() {
+    return {
+      hasError: true
+    };
+  }
+  componentDidCatch(error, info) {
+    console.error("ErrorBoundry cauch an error", error, info);
+  }
+  componentDidUpdate() {
+    if (this.state.hasError) {
+      // setTimeout(() => this.setState({ redirect: true }), 1000);
+      setTimeout(() => (0, _router.navigate)("/"), 1000);
+    }
+  }
+  render() {
+    if (this.state.redirect) {
+      return /*#__PURE__*/_react.default.createElement(_router.Redirect, {
+        to: "/"
+      });
+    }
+    if (this.state.hasError) {
+      return /*#__PURE__*/_react.default.createElement("h1", null, "These was an error with this listing. ", /*#__PURE__*/_react.default.createElement(_router.Link, {
+        to: "/"
+      }, " Click here"), " ", "to get back to the home page or wait five seconds.");
+    }
+    return this.props.children;
+  }
+}
+var _default = ErrorBoundary;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@reach/router":"../node_modules/@reach/router/es/index.js"}],"Details.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = DetailsWithErrorBoundary;
 var _react = _interopRequireDefault(require("react"));
 var _pet = _interopRequireDefault(require("@frontendmasters/pet"));
 var _Carousel = _interopRequireDefault(require("./Carousel"));
+var _ErrorBoundary = _interopRequireDefault(require("./ErrorBoundary"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
@@ -33270,6 +33323,8 @@ class Details extends _react.default.Component {
   //     };
   //   }
   componentDidMount() {
+    // here we generate Error to check our work
+    throw new Error("lol");
     _pet.default.animal(this.props.id).then(({
       animal
     }) => {
@@ -33304,6 +33359,8 @@ class Details extends _react.default.Component {
   }
 }
 
+// export default Details;
+
 // const Details = (props) => {
 //   // return <h1>hi lol</h1>
 //   return (
@@ -33312,9 +33369,11 @@ class Details extends _react.default.Component {
 //     </pre>
 //   );
 // };
-var _default = Details;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Carousel":"Carousel.js"}],"App.js":[function(require,module,exports) {
+
+function DetailsWithErrorBoundary(props) {
+  return /*#__PURE__*/_react.default.createElement(_ErrorBoundary.default, null, /*#__PURE__*/_react.default.createElement(Details, props));
+}
+},{"react":"../node_modules/react/index.js","@frontendmasters/pet":"../node_modules/@frontendmasters/pet/index.js","./Carousel":"Carousel.js","./ErrorBoundary":"ErrorBoundary.js"}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));

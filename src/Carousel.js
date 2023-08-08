@@ -6,10 +6,10 @@ class Carousel extends React.Component {
     active: 0,
   };
 
-//   constructor(props) {
-//     super(props);
-//     this.handleIndexClick = this.handleIndexClick.bind(this);
-//   }
+  // //   constructor(props) {
+  // //     super(props);
+  // //     this.handleIndexClick = this.handleIndexClick.bind(this);
+  // //   }
 
   static getDerivedStateFromProps({ media }) {
     let photos = ["http://placecorgi.com/600/600"];
@@ -37,7 +37,7 @@ class Carousel extends React.Component {
             //eslint-disable-next-line
             <img
               key={photo}
-              onclick={this.handleIndexCLick}
+              onClick={this.handleIndexClick}
               data-index={index}
               src={photo}
               className={index === active ? "active" : ""}
