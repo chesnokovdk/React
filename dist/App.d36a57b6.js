@@ -33185,8 +33185,8 @@ function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key i
 function _toPropertyKey(arg) { var key = _toPrimitive(arg, "string"); return typeof key === "symbol" ? key : String(key); }
 function _toPrimitive(input, hint) { if (typeof input !== "object" || input === null) return input; var prim = input[Symbol.toPrimitive]; if (prim !== undefined) { var res = prim.call(input, hint || "default"); if (typeof res !== "object") return res; throw new TypeError("@@toPrimitive must return a primitive value."); } return (hint === "string" ? String : Number)(input); }
 class Carousel extends _react.default.Component {
-  constructor(props) {
-    super(props);
+  constructor(...args) {
+    super(...args);
     _defineProperty(this, "state", {
       photos: [],
       active: 0
@@ -33196,8 +33196,11 @@ class Carousel extends _react.default.Component {
         active: +event.target.dataset.index
       });
     });
-    this.handleIndexClick = this.handleIndexClick.bind(this);
   }
+  //   constructor(props) {
+  //     super(props);
+  //     this.handleIndexClick = this.handleIndexClick.bind(this);
+  //   }
   static getDerivedStateFromProps({
     media
   }) {
@@ -33230,7 +33233,7 @@ class Carousel extends _react.default.Component {
       key: photo,
       onclick: this.handleIndexCLick,
       "data-index": index,
-      src: photo.large,
+      src: photo,
       className: index === active ? "active" : "",
       alt: "animal thumbnail"
     }))));
@@ -33374,7 +33377,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51763" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49799" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

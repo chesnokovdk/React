@@ -6,10 +6,10 @@ class Carousel extends React.Component {
     active: 0,
   };
 
-  constructor(props) {
-    super(props);
-    this.handleIndexClick = this.handleIndexClick.bind(this);
-  }
+//   constructor(props) {
+//     super(props);
+//     this.handleIndexClick = this.handleIndexClick.bind(this);
+//   }
 
   static getDerivedStateFromProps({ media }) {
     let photos = ["http://placecorgi.com/600/600"];
@@ -39,7 +39,7 @@ class Carousel extends React.Component {
               key={photo}
               onclick={this.handleIndexCLick}
               data-index={index}
-              src={photo.large}
+              src={photo}
               className={index === active ? "active" : ""}
               alt="animal thumbnail"
             />
